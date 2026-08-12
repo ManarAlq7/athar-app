@@ -1,0 +1,11 @@
+#  أَثَر | ATHAR — إعداد Cloudflare Pages
+#
+#  المفتاح ANTHROPIC_API_KEY لا يوضع هنا إطلاقاً — هذا الملف يُرفع مع الكود.
+#  يُضبط من لوحة Cloudflare:
+#    Pages → athar → Settings → Variables and Secrets → Add → النوع: Secret
+#  ومحلياً في ملف .dev.vars (مستثنى من git).
+
+name = "athar"
+# لا ترفع هذا التاريخ فوق ما يدعمه إصدار wrangler المثبّت، وإلا رفض المشغّل الإقلاع
+compatibility_date = "2026-08-11"
+pages_build_output_dir = "dist"

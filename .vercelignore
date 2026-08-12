@@ -1,0 +1,11 @@
+node_modules
+dist
+.wrangler
+
+# مجلد تجهيز الصور — للعمل المحلي فقط، لا يُرفع مع النشر
+photos-to-add
+
+# أسرار لا تُرفع — مفتاح Anthropic يُضبط من لوحة Vercel لا من ملف
+.env
+.env.local
+.dev.vars

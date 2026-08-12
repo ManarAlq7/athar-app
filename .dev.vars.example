@@ -1,0 +1,6 @@
+# انسخ هذا الملف إلى .dev.vars (مستثنى من git) لتجربة /api/analyze محلياً
+# عبر: npm run pages:dev
+#
+# المفتاح من: https://console.anthropic.com/settings/keys
+
+ANTHROPIC_API_KEY=sk-ant-...

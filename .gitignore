@@ -1,0 +1,11 @@
+node_modules
+dist
+.wrangler
+
+# أسرار — لا تُرفع أبداً
+.env
+.env.local
+.dev.vars
+
+.DS_Store
+*.local

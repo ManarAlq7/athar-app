@@ -1,0 +1,8 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# أصول Vite تحمل بصمة في اسمها، فتُخزَّن مؤقتاً إلى الأبد بأمان
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
