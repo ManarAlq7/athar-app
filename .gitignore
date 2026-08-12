@@ -2,6 +2,9 @@ node_modules
 dist
 .wrangler
 
+# مجلد تجهيز الصور — عمل محلي، لا يُحفظ ولا يُنشر
+photos-to-add
+
 # أسرار — لا تُرفع أبداً
 .env
 .env.local
