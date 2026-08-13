@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { supabase, isSupabaseConfigured } from '../lib/supabase'
 import { PhotoCard, PhotoCardSkeleton } from '../components/PhotoCard'
 import { Alert } from '../components/Alert'
-import { HeroBackdrop } from '../components/HeroBackdrop'
 import { REGIONS } from '../lib/constants'
+import heroPalms from '../assets/hero-palms.jpg'
 import type { Photo } from '../lib/types'
 
 interface Stats {
@@ -70,30 +70,48 @@ export function Home() {
   return (
     <div>
       {/* ————— الواجهة الرئيسية ————— */}
-      <section className="relative overflow-hidden">
-        <div className="pattern-najdi absolute inset-0 -z-10" aria-hidden />
+      <section className="relative flex min-h-[600px] items-center overflow-hidden sm:min-h-[680px]">
+        {/* صورة نخيل حقيقية في ضوء النهار — Pexels، رخصة مجانية */}
+        <img
+          src={heroPalms}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 -z-20 size-full object-cover"
+        />
+        {/* حجاب متدرّج: يعتّم الأعلى ليبقى النص مقروءاً، ويذوب في لون الصفحة أسفلاً */}
         <div
           className="absolute inset-0 -z-10"
           aria-hidden
           style={{
             background:
-              'linear-gradient(180deg, color-mix(in srgb, var(--surface) 55%, transparent) 0%, var(--surface) 78%)',
+              'linear-gradient(180deg, rgba(36,26,18,0.62) 0%, rgba(36,26,18,0.42) 38%, rgba(36,26,18,0.30) 62%, color-mix(in srgb, var(--surface) 88%, transparent) 92%, var(--surface) 100%)',
           }}
         />
-        <HeroBackdrop />
 
-        <div className="mx-auto max-w-6xl px-4 pb-16 pt-16 text-center sm:pb-24 sm:pt-24">
-          <span className="chip mx-auto">منصة سعودية لحفظ الذاكرة البصرية</span>
+        <div className="mx-auto w-full max-w-6xl px-4 pb-20 pt-20 text-center sm:pb-28 sm:pt-28">
+          <span
+            className="chip mx-auto backdrop-blur"
+            style={{
+              backgroundColor: 'rgba(250,247,240,0.16)',
+              color: '#f7f0e2',
+              borderColor: 'rgba(250,247,240,0.32)',
+            }}
+          >
+            منصة سعودية لحفظ الذاكرة البصرية
+          </span>
 
-          <h1 className="display mx-auto mt-6 max-w-3xl text-4xl font-bold leading-[1.25] sm:text-6xl">
+          <h1
+            className="display mx-auto mt-6 max-w-3xl text-4xl font-bold leading-[1.25] sm:text-6xl"
+            style={{ color: '#fdfaf3', textShadow: '0 2px 18px rgba(36,26,18,0.45)' }}
+          >
             كل صورة قديمة
             <br />
-            <span style={{ color: 'var(--accent)' }}>أَثَرٌ لا يُمحى</span>
+            <span style={{ color: '#8fd6a8' }}>أَثَرٌ لا يُمحى</span>
           </h1>
 
           <p
             className="mx-auto mt-6 max-w-2xl text-base leading-relaxed sm:text-lg"
-            style={{ color: 'var(--text-muted)' }}
+            style={{ color: '#efe6d4', textShadow: '0 1px 12px rgba(36,26,18,0.5)' }}
           >
             أسواقٌ تغيّرت، وشوارعُ لم تعد كما كانت، ومنازلُ لم يبقَ منها إلا الصور. ارفع ما لديك، ودع
             أَثَر يساعدك على توثيقه وحفظه للأجيال القادمة.
@@ -103,7 +121,15 @@ export function Home() {
             <Link to="/add" className="btn btn-primary px-7">
               أضف صورة
             </Link>
-            <Link to="/explore" className="btn btn-outline px-7">
+            <Link
+              to="/explore"
+              className="btn btn-outline px-7 backdrop-blur"
+              style={{
+                color: '#fdfaf3',
+                borderColor: 'rgba(250,247,240,0.55)',
+                backgroundColor: 'rgba(250,247,240,0.10)',
+              }}
+            >
               استكشف الأرشيف
             </Link>
           </div>
@@ -116,10 +142,13 @@ export function Home() {
                 { label: 'مساهم', value: stats.contributor_count },
               ].map((s) => (
                 <div key={s.label}>
-                  <dd className="display text-3xl font-bold" style={{ color: 'var(--ink)' }}>
+                  <dd
+                    className="display text-3xl font-bold"
+                    style={{ color: '#fdfaf3', textShadow: '0 2px 14px rgba(36,26,18,0.5)' }}
+                  >
                     <span className="num">{s.value}</span>
                   </dd>
-                  <dt className="mt-1 text-xs" style={{ color: 'var(--text-muted)' }}>
+                  <dt className="mt-1 text-xs" style={{ color: '#e4d9c4' }}>
                     {s.label}
                   </dt>
                 </div>

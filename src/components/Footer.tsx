@@ -49,6 +49,18 @@ export function Footer() {
             اقتراحات الذكاء الاصطناعي في أَثَر مساعِدة لا مرجعية — التوثيق النهائي مسؤولية صاحب
             الصورة، ولا يُثبَّت تاريخ أو موقع لم يؤكّده.
           </p>
+          <p className="mt-2">
+            صورة الواجهة الرئيسية من{' '}
+            <a
+              href="https://www.pexels.com/photo/palm-trees-in-desert-19820992/"
+              target="_blank"
+              rel="noreferrer"
+              className="underline"
+            >
+              Pexels
+            </a>{' '}
+            برخصة استخدام مجانية.
+          </p>
         </div>
       </div>
     </footer>
