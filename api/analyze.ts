@@ -6,7 +6,9 @@
  *   الاسم: ANTHROPIC_API_KEY   (بلا بادئة VITE_ حتى لا يُحقن في حزمة المتصفح)
  */
 
-import { handleAnalyze, json } from '../shared/analyze-core'
+// الامتداد .js مقصود: مُجمِّع Vercel يستخدم moduleResolution=node16 الذي يشترطه،
+// و TypeScript يحلّه إلى ملف .ts الحقيقي.
+import { handleAnalyze, json } from '../shared/analyze-core.js'
 
 declare const process: { env: Record<string, string | undefined> }
 

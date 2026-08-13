@@ -2,7 +2,8 @@
  * GET /api/health — غلاف Vercel Edge Function لفحص جاهزية الـ API بعد النشر.
  */
 
-import { healthResponse } from '../shared/analyze-core'
+// الامتداد .js مقصود — انظر التعليق في api/analyze.ts
+import { healthResponse } from '../shared/analyze-core.js'
 
 declare const process: { env: Record<string, string | undefined> }
 

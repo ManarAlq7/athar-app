@@ -12,3 +12,6 @@ photos-to-add
 
 .DS_Store
 *.local
+
+.vercel
+.env*

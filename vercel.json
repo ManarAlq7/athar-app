@@ -5,7 +5,6 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "comment": "توجيه SPA: أي مسار ليس ملفاً ثابتاً ولا دالة API يُخدَم بـ index.html ليتولّاه React Router",
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
