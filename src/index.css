@@ -7,8 +7,12 @@
 */
 
 @theme {
-  --font-display: 'Reem Kufi', 'Tajawal', system-ui, sans-serif;
-  --font-sans: 'Tajawal', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /*
+    خطوط عربية احتياطية صريحة: لو تعذّر تحميل Google Fonts (شبكة بطيئة أو محجوبة)
+    يسقط النص إلى خط عربي سليم التشكيل بدل خط لاتيني يشوّه الحروف.
+  */
+  --font-display: 'Reem Kufi', 'Tajawal', 'Segoe UI', Tahoma, 'Arabic Typesetting', system-ui, sans-serif;
+  --font-sans: 'Tajawal', 'Segoe UI', Tahoma, system-ui, -apple-system, sans-serif;
 
   --color-sand-50: #faf7f0;
   --color-sand-100: #f4eee1;

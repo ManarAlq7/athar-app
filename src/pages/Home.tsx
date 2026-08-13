@@ -72,23 +72,27 @@ export function Home() {
       {/* ————— الواجهة الرئيسية ————— */}
       <section className="relative flex min-h-[600px] items-center overflow-hidden sm:min-h-[680px]">
         {/* صورة نخيل حقيقية في ضوء النهار — Pexels، رخصة مجانية */}
+        {/*
+          لا تستخدم z سالبة هنا: القسم لا ينشئ سياق تكديس، فتُرسم العناصر السالبة
+          خلف خلفية الصفحة وتختفي. الترتيب الطبيعي (صورة ثم حجاب ثم محتوى) كافٍ.
+        */}
         <img
           src={heroPalms}
           alt=""
           aria-hidden
-          className="absolute inset-0 -z-20 size-full object-cover"
+          className="absolute inset-0 size-full object-cover"
         />
         {/* حجاب متدرّج: يعتّم الأعلى ليبقى النص مقروءاً، ويذوب في لون الصفحة أسفلاً */}
         <div
-          className="absolute inset-0 -z-10"
+          className="absolute inset-0"
           aria-hidden
           style={{
             background:
-              'linear-gradient(180deg, rgba(36,26,18,0.62) 0%, rgba(36,26,18,0.42) 38%, rgba(36,26,18,0.30) 62%, color-mix(in srgb, var(--surface) 88%, transparent) 92%, var(--surface) 100%)',
+              'linear-gradient(180deg, rgba(36,26,18,0.72) 0%, rgba(36,26,18,0.58) 42%, rgba(36,26,18,0.52) 76%, rgba(36,26,18,0.34) 90%, color-mix(in srgb, var(--surface) 92%, transparent) 97%, var(--surface) 100%)',
           }}
         />
 
-        <div className="mx-auto w-full max-w-6xl px-4 pb-20 pt-20 text-center sm:pb-28 sm:pt-28">
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-20 pt-20 text-center sm:pb-28 sm:pt-28">
           <span
             className="chip mx-auto backdrop-blur"
             style={{
@@ -102,7 +106,7 @@ export function Home() {
 
           <h1
             className="display mx-auto mt-6 max-w-3xl text-4xl font-bold leading-[1.25] sm:text-6xl"
-            style={{ color: '#fdfaf3', textShadow: '0 2px 18px rgba(36,26,18,0.45)' }}
+            style={{ color: '#fdfaf3' }}
           >
             كل صورة قديمة
             <br />
@@ -111,7 +115,7 @@ export function Home() {
 
           <p
             className="mx-auto mt-6 max-w-2xl text-base leading-relaxed sm:text-lg"
-            style={{ color: '#efe6d4', textShadow: '0 1px 12px rgba(36,26,18,0.5)' }}
+            style={{ color: '#efe6d4' }}
           >
             أسواقٌ تغيّرت، وشوارعُ لم تعد كما كانت، ومنازلُ لم يبقَ منها إلا الصور. ارفع ما لديك، ودع
             أَثَر يساعدك على توثيقه وحفظه للأجيال القادمة.
@@ -144,7 +148,7 @@ export function Home() {
                 <div key={s.label}>
                   <dd
                     className="display text-3xl font-bold"
-                    style={{ color: '#fdfaf3', textShadow: '0 2px 14px rgba(36,26,18,0.5)' }}
+                    style={{ color: '#fdfaf3' }}
                   >
                     <span className="num">{s.value}</span>
                   </dd>
