@@ -23,6 +23,16 @@ export function Footer() {
             <h2 className="mb-3 text-sm font-bold">تصفّح</h2>
             <ul className="space-y-2 text-sm" style={{ color: 'var(--text-muted)' }}>
               <li>
+                <Link to="/how" className="hover:underline">
+                  كيف يعمل أَثَر
+                </Link>
+              </li>
+              <li>
+                <Link to="/latest" className="hover:underline">
+                  أحدث الإضافات
+                </Link>
+              </li>
+              <li>
                 <Link to="/explore" className="hover:underline">
                   استكشف الأرشيف
                 </Link>

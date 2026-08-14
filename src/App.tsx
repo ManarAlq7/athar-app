@@ -4,6 +4,8 @@ import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { Home } from './pages/Home'
+import { HowItWorks } from './pages/HowItWorks'
+import { Latest } from './pages/Latest'
 import { Explore } from './pages/Explore'
 import { PhotoDetail } from './pages/PhotoDetail'
 import { AddPhoto } from './pages/AddPhoto'
@@ -35,6 +37,8 @@ export function App() {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/how" element={<HowItWorks />} />
+          <Route path="/latest" element={<Latest />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/photo/:id" element={<PhotoDetail />} />
 

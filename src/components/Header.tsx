@@ -5,6 +5,8 @@ import { Logo } from './Logo'
 
 const LINKS = [
   { to: '/', label: 'الرئيسية' },
+  { to: '/how', label: 'كيف يعمل' },
+  { to: '/latest', label: 'أحدث الإضافات' },
   { to: '/explore', label: 'استكشف الأرشيف' },
   { to: '/add', label: 'أضف صورة' },
 ]
