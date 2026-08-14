@@ -7,6 +7,7 @@ const LINKS = [
   { to: '/', label: 'الرئيسية' },
   { to: '/how', label: 'كيف يعمل' },
   { to: '/latest', label: 'أحدث الإضافات' },
+  { to: '/map', label: 'الخريطة' },
   { to: '/explore', label: 'استكشف الأرشيف' },
   { to: '/add', label: 'أضف صورة' },
 ]

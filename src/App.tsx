@@ -6,6 +6,7 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import { Home } from './pages/Home'
 import { HowItWorks } from './pages/HowItWorks'
 import { Latest } from './pages/Latest'
+import { MapPage } from './pages/MapPage'
 import { Explore } from './pages/Explore'
 import { PhotoDetail } from './pages/PhotoDetail'
 import { AddPhoto } from './pages/AddPhoto'
@@ -39,6 +40,7 @@ export function App() {
           <Route path="/" element={<Home />} />
           <Route path="/how" element={<HowItWorks />} />
           <Route path="/latest" element={<Latest />} />
+          <Route path="/map" element={<MapPage />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/photo/:id" element={<PhotoDetail />} />
 
