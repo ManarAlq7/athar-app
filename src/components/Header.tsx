@@ -8,6 +8,7 @@ const LINKS = [
   { to: '/how', label: 'كيف يعمل' },
   { to: '/latest', label: 'أحدث الإضافات' },
   { to: '/map', label: 'الخريطة' },
+  { to: '/timeline', label: 'الخط الزمني' },
   { to: '/explore', label: 'استكشف الأرشيف' },
   { to: '/add', label: 'أضف صورة' },
 ]
