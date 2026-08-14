@@ -64,7 +64,26 @@ export function Latest() {
         </div>
       )}
 
-      <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* التصفّح حسب المنطقة أعلى الصفحة — قبل الصور لا بعدها */}
+      <section className="mt-8">
+        <h2 className="text-sm font-bold" style={{ color: 'var(--text-muted)' }}>
+          تصفّح حسب المنطقة
+        </h2>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {REGIONS.map((r) => (
+            <Link
+              key={r}
+              to={`/explore?region=${encodeURIComponent(r)}`}
+              className="rounded-xl border px-4 py-2.5 text-sm font-semibold transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              style={{ borderColor: 'var(--border-strong)', color: 'var(--text-muted)' }}
+            >
+              {r}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {loading ? (
           Array.from({ length: 6 }, (_, i) => <PhotoCardSkeleton key={i} />)
         ) : photos.length > 0 ? (
@@ -84,21 +103,6 @@ export function Latest() {
         )}
       </section>
 
-      <section className="mt-16">
-        <h2 className="display text-2xl font-bold">تصفّح حسب المنطقة</h2>
-        <div className="mt-6 flex flex-wrap gap-2">
-          {REGIONS.map((r) => (
-            <Link
-              key={r}
-              to={`/explore?region=${encodeURIComponent(r)}`}
-              className="rounded-xl border px-4 py-2.5 text-sm font-semibold transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
-              style={{ borderColor: 'var(--border-strong)', color: 'var(--text-muted)' }}
-            >
-              {r}
-            </Link>
-          ))}
-        </div>
-      </section>
     </div>
   )
 }
