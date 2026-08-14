@@ -101,7 +101,7 @@ export function MapPage() {
           </dl>
 
           {/* قائمة منسدلة مكافئة — للوصول من لوحة المفاتيح وقارئات الشاشة والجوّال */}
-          <section className="mx-auto mt-12 max-w-sm">
+          <section className="mt-12">
             <label className="label text-center" htmlFor="region-select">
               أو اختر من القائمة
             </label>
