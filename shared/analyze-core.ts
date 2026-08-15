@@ -9,7 +9,30 @@
  * ولا اسم مكان غير مؤكد — وما لم يتأكد منه يُدرج صراحةً في uncertain_notes.
  */
 
-const MODEL = 'claude-sonnet-4-5'
+/**
+ * النموذج نفسه في الحالتين — بوابة Vercel تشترط بادئة المزوّد في المعرّف.
+ */
+const MODEL_DIRECT = 'claude-sonnet-4-5'
+const MODEL_GATEWAY = 'anthropic/claude-sonnet-4.5'
+
+const ENDPOINT_DIRECT = 'https://api.anthropic.com/v1/messages'
+const ENDPOINT_GATEWAY = 'https://ai-gateway.vercel.sh/v1/messages'
+
+/**
+ * مصدر الذكاء الاصطناعي: بوابة Vercel أو Anthropic مباشرة.
+ * البوابة مقدَّمة إن توفّر مفتاحها، لأنها تأتي مع رصيد مجاني في خطة Vercel.
+ */
+export interface AiConfig {
+  gatewayKey?: string
+  anthropicKey?: string
+}
+
+export function aiProvider(c: AiConfig): 'vercel-ai-gateway' | 'anthropic' | null {
+  if (c.gatewayKey) return 'vercel-ai-gateway'
+  if (c.anthropicKey) return 'anthropic'
+  return null
+}
+
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024
 const ALLOWED_MEDIA = ['image/jpeg', 'image/png', 'image/webp'] as const
 
@@ -139,23 +162,28 @@ function asStringArray(value: unknown, limit: number): string[] {
     .slice(0, limit)
 }
 
-/** استجابة فحص الجاهزية — لا تكشف المفتاح، تكتفي بالإخبار عن وجوده */
-export function healthResponse(apiKey: string | undefined, platform: string): Response {
+/** استجابة فحص الجاهزية — لا تكشف المفتاح، تكتفي بالإخبار عن وجوده ومصدره */
+export function healthResponse(config: AiConfig, platform: string): Response {
+  const provider = aiProvider(config)
   return json({
     status: 'ok',
     service: 'athar-api',
     platform,
     analyze_endpoint: '/api/analyze',
-    ai_configured: Boolean(apiKey),
+    ai_configured: provider !== null,
+    ai_provider: provider,
     time: new Date().toISOString(),
   })
 }
 
 /** المعالج الرئيسي لـ POST /api/analyze */
-export async function handleAnalyze(request: Request, apiKey: string | undefined): Promise<Response> {
-  if (!apiKey) {
-    return fail('خدمة التحليل غير مهيّأة على الخادم — لم يُضبط مفتاح Anthropic.', 503)
+export async function handleAnalyze(request: Request, config: AiConfig): Promise<Response> {
+  const provider = aiProvider(config)
+  if (!provider) {
+    return fail('خدمة التحليل غير مهيّأة على الخادم — لم يُضبط مفتاح للذكاء الاصطناعي.', 503)
   }
+
+  const useGateway = provider === 'vercel-ai-gateway'
 
   let body: RequestBody
   try {
@@ -180,15 +208,20 @@ export async function handleAnalyze(request: Request, apiKey: string | undefined
   }
 
   try {
-    const upstream = await fetch('https://api.anthropic.com/v1/messages', {
+    const upstream = await fetch(useGateway ? ENDPOINT_GATEWAY : ENDPOINT_DIRECT, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
+      headers: useGateway
+        ? {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${config.gatewayKey}`,
+          }
+        : {
+            'Content-Type': 'application/json',
+            'x-api-key': config.anthropicKey as string,
+            'anthropic-version': '2023-06-01',
+          },
       body: JSON.stringify({
-        model: MODEL,
+        model: useGateway ? MODEL_GATEWAY : MODEL_DIRECT,
         max_tokens: 1500,
         system: buildSystemPrompt(),
         tools: [TOOL],
@@ -213,6 +246,14 @@ export async function handleAnalyze(request: Request, apiKey: string | undefined
       console.error('Anthropic error', upstream.status, detail)
 
       if (upstream.status === 401) return fail('مفتاح خدمة التحليل غير صالح.', 502)
+
+      // بوابة Vercel تمنح رصيداً مجانياً لكنها تشترط بطاقة مسجّلة لفتحه
+      if (upstream.status === 403 && detail.includes('customer_verification_required')) {
+        return fail(
+          'خدمة التحليل بحاجة إلى تفعيل: بوابة Vercel تشترط تسجيل بطاقة في الحساب لفتح الرصيد المجاني.',
+          503,
+        )
+      }
       if (upstream.status === 429) return fail('الخدمة مزدحمة الآن — أعد المحاولة بعد قليل.', 429)
       if (upstream.status >= 500) return fail('خدمة التحليل غير متاحة مؤقتاً.', 502)
       return fail('تعذّر تحليل الصورة.', 502)
