@@ -47,6 +47,17 @@ export interface AnalysisRequest {
   }
 }
 
+/** ذكرى يكتبها زائر تحت صورة — جدار الذاكرة */
+export interface Memory {
+  id: string
+  photo_id: string
+  user_id: string
+  /** اسم الكاتب وقت الكتابة، لا مرجع متغيّر */
+  author: string
+  body: string
+  created_at: string
+}
+
 export interface ExploreFilters {
   search: string
   region: string

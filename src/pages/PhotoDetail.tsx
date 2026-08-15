@@ -4,6 +4,7 @@ import { supabase, publicImageUrl } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import { Spinner } from '../components/Spinner'
 import { Alert } from '../components/Alert'
+import { MemoryWall } from '../components/MemoryWall'
 import { STORAGE_BUCKET } from '../lib/constants'
 import type { Photo } from '../lib/types'
 
@@ -262,6 +263,8 @@ export function PhotoDetail() {
           </div>
         </aside>
       </div>
+
+      <MemoryWall photoId={photo.id} photoOwnerId={photo.user_id} />
     </div>
   )
 }
