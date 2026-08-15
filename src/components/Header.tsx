@@ -5,8 +5,6 @@ import { Logo } from './Logo'
 
 const LINKS = [
   { to: '/', label: 'الرئيسية' },
-  { to: '/how', label: 'كيف يعمل' },
-  { to: '/latest', label: 'أحدث الإضافات' },
   { to: '/map', label: 'الخريطة' },
   { to: '/timeline', label: 'الخط الزمني' },
   { to: '/explore', label: 'استكشف الأرشيف' },
@@ -59,19 +57,29 @@ export function Header() {
         <div className="hidden items-center gap-2 md:flex">
           {user ? (
             <>
-              <Link to="/account" className="btn btn-outline !min-h-[42px] !px-3.5 text-sm">
+              <Link
+                to="/account"
+                className="btn btn-outline !min-h-[42px] !px-3.5 whitespace-nowrap text-sm"
+              >
                 {displayName(user)}
               </Link>
-              <button type="button" onClick={handleSignOut} className="btn btn-ink !min-h-[42px] text-sm">
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="btn btn-ink !min-h-[42px] whitespace-nowrap text-sm"
+              >
                 تسجيل الخروج
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="btn btn-outline !min-h-[42px] !px-3.5 text-sm">
+              <Link
+                to="/login"
+                className="btn btn-outline !min-h-[42px] !px-3.5 whitespace-nowrap text-sm"
+              >
                 تسجيل الدخول
               </Link>
-              <Link to="/signup" className="btn btn-primary !min-h-[42px] text-sm">
+              <Link to="/signup" className="btn btn-primary !min-h-[42px] whitespace-nowrap text-sm">
                 إنشاء حساب
               </Link>
             </>
@@ -116,19 +124,35 @@ export function Header() {
             <div className="mt-3 flex flex-col gap-2 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
               {user ? (
                 <>
-                  <Link to="/account" onClick={() => setOpen(false)} className="btn btn-outline">
+                  <Link
+                    to="/account"
+                    onClick={() => setOpen(false)}
+                    className="btn btn-outline whitespace-nowrap"
+                  >
                     حسابي — {displayName(user)}
                   </Link>
-                  <button type="button" onClick={handleSignOut} className="btn btn-ink">
+                  <button
+                    type="button"
+                    onClick={handleSignOut}
+                    className="btn btn-ink whitespace-nowrap"
+                  >
                     تسجيل الخروج
                   </button>
                 </>
               ) : (
                 <>
-                  <Link to="/login" onClick={() => setOpen(false)} className="btn btn-outline">
+                  <Link
+                    to="/login"
+                    onClick={() => setOpen(false)}
+                    className="btn btn-outline whitespace-nowrap"
+                  >
                     تسجيل الدخول
                   </Link>
-                  <Link to="/signup" onClick={() => setOpen(false)} className="btn btn-primary">
+                  <Link
+                    to="/signup"
+                    onClick={() => setOpen(false)}
+                    className="btn btn-primary whitespace-nowrap"
+                  >
                     إنشاء حساب
                   </Link>
                 </>

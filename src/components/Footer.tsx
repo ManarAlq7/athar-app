@@ -28,11 +28,6 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/latest" className="hover:underline">
-                  أحدث الإضافات
-                </Link>
-              </li>
-              <li>
                 <Link to="/explore" className="hover:underline">
                   استكشف الأرشيف
                 </Link>
