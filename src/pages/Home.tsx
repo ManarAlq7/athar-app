@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase, isSupabaseConfigured } from '../lib/supabase'
 import { Alert } from '../components/Alert'
-import heroPalms from '../assets/hero-palms.jpg'
+import { HeroBackdrop } from '../components/HeroBackdrop'
 
 interface Stats {
   photo_count: number
@@ -11,7 +11,7 @@ interface Stats {
 }
 
 /**
- * الصفحة الرئيسية = الواجهة وحدها، بملء الشاشة.
+ * الصفحة الرئيسية = الواجهة وحدها، بملء الشاشة، فوق مشهد نجدي مرسوم.
  * «كيف يعمل أَثَر» و«أحدث ما أُضيف» لكلٍّ منهما صفحته المستقلة.
  */
 export function Home() {
@@ -33,38 +33,30 @@ export function Home() {
 
   return (
     <section className="relative flex min-h-[calc(100dvh-74px)] items-center overflow-hidden">
-      {/*
-        لا تستخدم z سالبة هنا: القسم لا ينشئ سياق تكديس، فتُرسم العناصر السالبة
-        خلف خلفية الصفحة وتختفي. الترتيب الطبيعي (صورة ثم حجاب ثم محتوى) كافٍ.
-      */}
-      <img
-        src={heroPalms}
-        alt=""
-        aria-hidden
-        className="absolute inset-0 size-full object-cover"
-      />
+      {/* نقشة هندسية خفيفة خلف كل شيء */}
+      <div className="pattern-najdi absolute inset-0" aria-hidden />
       <div
         className="absolute inset-0"
         aria-hidden
         style={{
           background:
-            'linear-gradient(180deg, rgba(36,26,18,0.72) 0%, rgba(36,26,18,0.58) 42%, rgba(36,26,18,0.54) 80%, rgba(36,26,18,0.46) 100%)',
+            'linear-gradient(180deg, color-mix(in srgb, var(--surface) 62%, transparent) 0%, var(--surface) 72%)',
         }}
       />
 
+      {/* المشهد النجدي المرسوم — نخيل وبيوت طين وعائلة */}
+      <HeroBackdrop />
+
       <div className="relative z-10 mx-auto w-full max-w-6xl px-4 py-20 text-center">
-        <h1
-          className="display mx-auto max-w-3xl text-4xl font-bold leading-[1.25] sm:text-6xl"
-          style={{ color: '#fdfaf3' }}
-        >
+        <h1 className="display mx-auto max-w-3xl text-4xl font-bold leading-[1.25] sm:text-6xl">
           كل صورة قديمة
           <br />
-          <span style={{ color: '#8fd6a8' }}>أَثَرٌ لا يُمحى</span>
+          <span style={{ color: 'var(--accent)' }}>أَثَرٌ لا يُمحى</span>
         </h1>
 
         <p
           className="mx-auto mt-6 max-w-2xl text-base leading-relaxed sm:text-lg"
-          style={{ color: '#efe6d4' }}
+          style={{ color: 'var(--text-muted)' }}
         >
           أسواقٌ تغيّرت، وشوارعُ لم تعد كما كانت، ومنازلُ لم يبقَ منها إلا الصور.
           <br />
@@ -72,30 +64,13 @@ export function Home() {
         </p>
 
         {/* الشارة تسبق الزرّين مباشرةً */}
-        <span
-          className="chip mx-auto mt-10 backdrop-blur"
-          style={{
-            backgroundColor: 'rgba(250,247,240,0.16)',
-            color: '#f7f0e2',
-            borderColor: 'rgba(250,247,240,0.32)',
-          }}
-        >
-          منصة سعودية لحفظ الذاكرة البصرية
-        </span>
+        <span className="chip mx-auto mt-10">منصة سعودية لحفظ الذاكرة البصرية</span>
 
         <div className="mt-4 flex flex-wrap justify-center gap-3">
           <Link to="/add" className="btn btn-primary px-7">
             أضف صورة
           </Link>
-          <Link
-            to="/explore"
-            className="btn btn-outline px-7 backdrop-blur"
-            style={{
-              color: '#fdfaf3',
-              borderColor: 'rgba(250,247,240,0.55)',
-              backgroundColor: 'rgba(250,247,240,0.10)',
-            }}
-          >
+          <Link to="/explore" className="btn btn-outline px-7">
             استكشف الأرشيف
           </Link>
         </div>
@@ -108,10 +83,10 @@ export function Home() {
               { label: 'مساهم', value: stats.contributor_count },
             ].map((s) => (
               <div key={s.label}>
-                <dd className="display text-3xl font-bold" style={{ color: '#fdfaf3' }}>
+                <dd className="display text-3xl font-bold" style={{ color: 'var(--ink)' }}>
                   <span className="num">{s.value}</span>
                 </dd>
-                <dt className="mt-1 text-xs" style={{ color: '#e4d9c4' }}>
+                <dt className="mt-1 text-xs" style={{ color: 'var(--text-muted)' }}>
                   {s.label}
                 </dt>
               </div>

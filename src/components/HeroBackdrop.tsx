@@ -12,7 +12,7 @@
 export function HeroBackdrop() {
   return (
     <svg
-      className="absolute inset-x-0 bottom-0 -z-10 h-[68%] w-full"
+      className="absolute inset-x-0 bottom-0 h-[38%] w-full"
       viewBox="0 0 1440 520"
       preserveAspectRatio="xMidYMax slice"
       fill="none"
