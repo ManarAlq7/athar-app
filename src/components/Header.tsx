@@ -5,10 +5,10 @@ import { Logo } from './Logo'
 
 const LINKS = [
   { to: '/', label: 'الرئيسية' },
-  { to: '/map', label: 'الخريطة' },
-  { to: '/timeline', label: 'الخط الزمني' },
   { to: '/explore', label: 'استكشف الأرشيف' },
   { to: '/add', label: 'أضف صورة' },
+  { to: '/timeline', label: 'الخط الزمني' },
+  { to: '/map', label: 'الخريطة' },
 ]
 
 export function Header() {
