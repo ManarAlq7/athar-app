@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext'
 import { Spinner } from '../components/Spinner'
 import { Alert } from '../components/Alert'
 import { MemoryWall } from '../components/MemoryWall'
+import { BeforeAfter } from '../components/BeforeAfter'
 import { STORAGE_BUCKET } from '../lib/constants'
 import type { Photo } from '../lib/types'
 
@@ -104,16 +105,26 @@ export function PhotoDetail() {
         → العودة للأرشيف
       </Link>
 
-      <figure
-        className="overflow-hidden rounded-2xl border"
-        style={{ backgroundColor: 'var(--surface-alt)', borderColor: 'var(--border)' }}
-      >
-        <img
-          src={publicImageUrl(photo.image_path)}
+      {photo.after_image_path ? (
+        <BeforeAfter
+          beforeSrc={publicImageUrl(photo.image_path)}
+          afterSrc={publicImageUrl(photo.after_image_path)}
+          beforeYear={photo.approx_year}
+          afterYear={photo.after_year}
           alt={photo.title}
-          className="max-h-[70vh] w-full object-contain"
         />
-      </figure>
+      ) : (
+        <figure
+          className="overflow-hidden rounded-2xl border"
+          style={{ backgroundColor: 'var(--surface-alt)', borderColor: 'var(--border)' }}
+        >
+          <img
+            src={publicImageUrl(photo.image_path)}
+            alt={photo.title}
+            className="max-h-[70vh] w-full object-contain"
+          />
+        </figure>
+      )}
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_300px]">
         <div>

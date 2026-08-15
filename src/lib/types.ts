@@ -12,6 +12,10 @@ export interface Photo {
   tags: string[]
   visible_elements: string[]
   image_path: string
+  /** صورة المكان اليوم — وجودها يفعّل مقارنة «قبل وبعد» */
+  after_image_path: string | null
+  /** سنة الصورة الحديثة */
+  after_year: number | null
   /** هل استُخدم الذكاء الاصطناعي في التوثيق؟ يُعرض كشارة شفافية */
   ai_assisted: boolean
   created_at: string

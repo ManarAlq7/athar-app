@@ -48,6 +48,12 @@ export function AddPhoto() {
   const [approxYear, setApproxYear] = useState('')
   const [story, setStory] = useState('')
 
+  // ————— صورة المكان اليوم (اختيارية) — وجودها يفعّل مقارنة «قبل وبعد» —————
+  const afterInputRef = useRef<HTMLInputElement>(null)
+  const [afterFile, setAfterFile] = useState<File | null>(null)
+  const [afterPreview, setAfterPreview] = useState('')
+  const [afterYear, setAfterYear] = useState('')
+
   // ————— حقول التوثيق (يملؤها الذكاء الاصطناعي ويعدّلها المستخدم) —————
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -76,6 +82,18 @@ export function AddPhoto() {
 
     return () => URL.revokeObjectURL(url)
   }, [file])
+
+  useEffect(() => {
+    if (!afterFile) {
+      setAfterPreview('')
+      return
+    }
+
+    const url = URL.createObjectURL(afterFile)
+    setAfterPreview(url)
+
+    return () => URL.revokeObjectURL(url)
+  }, [afterFile])
 
   const acceptFile = (next: File | undefined | null) => {
     setAiError('')
@@ -200,6 +218,26 @@ export function AddPhoto() {
       return
     }
 
+    // الصورة الحديثة اختيارية — فشلها لا يُسقط الحفظ، بل يُلغي مقارنة قبل/بعد فقط
+    let afterPath: string | null = null
+    let afterYearValue: number | null = null
+
+    if (afterFile) {
+      const afterExt = EXTENSIONS[afterFile.type as MediaType] ?? 'jpg'
+      const candidate = `${user.id}/${crypto.randomUUID()}.${afterExt}`
+      const { error: afterErr } = await supabase.storage
+        .from(STORAGE_BUCKET)
+        .upload(candidate, afterFile, { contentType: afterFile.type, upsert: false })
+
+      if (!afterErr) {
+        afterPath = candidate
+        const parsedAfter = Number(afterYear.trim())
+        if (Number.isInteger(parsedAfter) && parsedAfter >= 1900 && parsedAfter <= 2100) {
+          afterYearValue = parsedAfter
+        }
+      }
+    }
+
     const { data, error: insertError } = await supabase
       .from('photos')
       .insert({
@@ -214,6 +252,8 @@ export function AddPhoto() {
         tags: splitList(tags).slice(0, 12),
         visible_elements: splitList(visibleElements).slice(0, 20),
         image_path: imagePath,
+        after_image_path: afterPath,
+        after_year: afterYearValue,
         ai_assisted: aiAssisted,
       })
       .select('id')
@@ -566,6 +606,91 @@ export function AddPhoto() {
               </span>
             </label>
           )}
+        </section>
+
+        {/* ————— ٥) صورة المكان اليوم ————— */}
+        <section className="card p-5">
+          <h2 className="display text-lg font-bold">
+            <span className="num">٥</span> · صورة المكان اليوم <span className="text-sm font-normal" style={{ color: 'var(--text-faint)' }}>(اختياري)</span>
+          </h2>
+          <p className="mt-1.5 text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+            عندك صورة للمكان نفسه اليوم؟ أضفها ليظهر سحّاب «قبل وبعد» يقارن بينهما — أقوى ما يُظهر
+            كم تغيّر المكان.
+          </p>
+
+          {!afterFile ? (
+            <button
+              type="button"
+              onClick={() => afterInputRef.current?.click()}
+              className="btn btn-outline mt-4"
+            >
+              اختر صورة حديثة
+            </button>
+          ) : (
+            <div className="mt-4">
+              <figure
+                className="overflow-hidden rounded-xl border"
+                style={{ backgroundColor: 'var(--surface-alt)', borderColor: 'var(--border)' }}
+              >
+                <img src={afterPreview} alt="معاينة الصورة الحديثة" className="max-h-72 w-full object-contain" />
+              </figure>
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+                <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                  {afterFile.name}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAfterFile(null)
+                    if (afterInputRef.current) afterInputRef.current.value = ''
+                  }}
+                  className="text-sm underline"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  إزالة
+                </button>
+              </div>
+
+              <div className="mt-4">
+                <label className="label" htmlFor="after-year">
+                  سنة الصورة الحديثة
+                </label>
+                <input
+                  id="after-year"
+                  type="number"
+                  inputMode="numeric"
+                  min={1900}
+                  max={2100}
+                  className="field num"
+                  value={afterYear}
+                  onChange={(e) => setAfterYear(e.target.value)}
+                  placeholder="2026"
+                />
+              </div>
+            </div>
+          )}
+
+          <input
+            ref={afterInputRef}
+            type="file"
+            accept={ACCEPTED_IMAGE_TYPES.join(',')}
+            onChange={(e) => {
+              const next = e.target.files?.[0]
+              if (!next) return
+              if (!(ACCEPTED_IMAGE_TYPES as readonly string[]).includes(next.type)) {
+                setSaveError('صيغة الصورة الحديثة غير مدعومة.')
+                return
+              }
+              if (next.size > MAX_IMAGE_BYTES) {
+                setSaveError(`حجم الصورة الحديثة كبير. الحد الأقصى ${MAX_MB} ميجابايت.`)
+                return
+              }
+              setSaveError('')
+              setAfterFile(next)
+            }}
+            className="hidden"
+            aria-label="اختيار صورة حديثة للمكان"
+          />
         </section>
 
         {saveError && <Alert tone="error">{saveError}</Alert>}
