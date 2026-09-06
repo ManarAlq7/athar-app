@@ -9,3 +9,5 @@ photos-to-add
 .env
 .env.local
 .dev.vars
+
+backup-before-migration-*

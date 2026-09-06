@@ -36,57 +36,36 @@ export function Home() {
       <HeroBackdrop />
 
       <div className="relative z-10 mx-auto w-full max-w-3xl px-4 py-16 text-center">
-        {/* أَثَر و ATHAR جنباً إلى جنب */}
+        {/* العبارة الجامعة */}
         <h1
-          className="display flex items-baseline justify-center gap-3.5 text-4xl font-bold leading-none sm:text-5xl"
+          className="display mx-auto max-w-3xl text-4xl font-bold leading-[1.3] sm:text-6xl"
           style={{ color: 'var(--ink)' }}
         >
-          <span>أَثَر</span>
-          <span
-            className="text-[11px] font-medium sm:text-xs"
-            style={{ color: 'var(--text-faint)', letterSpacing: '0.34em' }}
-          >
-            ATHAR
-          </span>
+          كل صورةٍ قديمة
+          <br />
+          <span style={{ color: 'var(--accent)' }}>أَثَرٌ لا يُمحى</span>
         </h1>
-
-        {/* الخط الأخضر الفاصل */}
-        <span
-          className="mx-auto mt-5 block h-[3px] w-20 rounded-full"
-          style={{ backgroundColor: 'var(--accent)' }}
-          aria-hidden
-        />
-
-        {/* الذاكرة البصرية للمملكة */}
-        <p className="display mt-6 text-xl font-medium sm:text-2xl" style={{ color: 'var(--text-muted)' }}>
-          الذاكرة البصرية للمملكة
-        </p>
-
-        {/* العبارة الجامعة */}
-        <p
-          className="display mx-auto mt-8 max-w-2xl text-xl leading-[1.7] sm:text-2xl"
-          style={{ color: 'var(--ink)', fontWeight: 400 }}
-        >
-          كل صورةٍ قديمة…{' '}
-          <span style={{ color: 'var(--accent)', fontWeight: 700 }}>أَثَرٌ لا يُمحى.</span>
-        </p>
 
         {/* الوصف */}
         <p
-          className="mx-auto mt-6 max-w-xl text-sm leading-loose sm:text-base"
+          className="mx-auto mt-7 max-w-2xl text-base leading-relaxed sm:text-lg"
           style={{ color: 'var(--text-muted)' }}
         >
-          مساحة تحفظ صور الأماكن وذكرياتها، وتجمع حكايات المدن والأحياء والديار كما بقيت في ذاكرة
-          من عاشها.
+          أسواقٌ تغيّرت، وشوارعُ لم تعد كما كانت، ومنازلُ لم يبقَ منها إلا الصور.
+          <br />
+          ارفع ما لديك، ودع أَثَر يساعدك على توثيقه وحفظه للأجيال القادمة.
         </p>
 
+        {/* الشارة */}
+        <span className="chip mx-auto mt-9">منصة سعودية لحفظ الذاكرة البصرية</span>
+
         {/* الفعل */}
-        <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <Link to="/explore" className="btn btn-primary px-7">
-            استكشف الذاكرة
+        <div className="mt-4 flex flex-wrap justify-center gap-3">
+          <Link to="/add" className="btn btn-primary px-7">
+            أضف صورة
           </Link>
-          <Link to="/add" className="btn btn-outline px-7">
-            أضف أثرك
+          <Link to="/explore" className="btn btn-outline px-7">
+            استكشف الأرشيف
           </Link>
         </div>
 
