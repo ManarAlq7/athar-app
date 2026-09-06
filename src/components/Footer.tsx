@@ -55,16 +55,8 @@ export function Footer() {
             الصورة، ولا يُثبَّت تاريخ أو موقع لم يؤكّده.
           </p>
           <p className="mt-2">
-            صورة الواجهة الرئيسية من{' '}
-            <a
-              href="https://www.pexels.com/photo/palm-trees-in-desert-19820992/"
-              target="_blank"
-              rel="noreferrer"
-              className="underline"
-            >
-              Pexels
-            </a>{' '}
-            برخصة استخدام مجانية.
+            كل صور الأرشيف ملك عام (Public Domain) أو بترخيص CC0، ولا يتطلب أيٌّ منها نسبة إلزامية.
+            مصدر كل صورة وترخيصها معروضان في صفحتها.
           </p>
         </div>
       </div>
