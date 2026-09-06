@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { supabase, isSupabaseConfigured } from '../lib/supabase'
 import { Alert } from '../components/Alert'
 import { HeroBackdrop } from '../components/HeroBackdrop'
-import { LogoMark } from '../components/Logo'
 
 interface Stats {
   photo_count: number
@@ -12,11 +11,8 @@ interface Stats {
 }
 
 /**
- * الصفحة الرئيسية — الهوية البصرية الأصلية لأَثَر، مطابقة لـ public/og.png:
- * شعار في الوسط، ثم الاسم، ثم خط أخضر، ثم «الذاكرة البصرية للمملكة»، ثم ATHAR،
- * وأفق نجدي هادئ في الأسفل.
- *
- * كل الوظائف الحالية باقية: الزرّان والإحصاءات وتنبيه الإعداد.
+ * الصفحة الرئيسية — الهوية البصرية الأصلية لأَثَر (بيج وبنّي وأفق نجدي هادئ)،
+ * ومعها رسالة المشروع: الاسم، ثم العبارة الجامعة، ثم وصف مختصر، ثم الفعل.
  */
 export function Home() {
   const [stats, setStats] = useState<Stats | null>(null)
@@ -40,17 +36,18 @@ export function Home() {
       <HeroBackdrop />
 
       <div className="relative z-10 mx-auto w-full max-w-3xl px-4 py-16 text-center">
-        {/* الشعار — قوس نجدي داخل مربّع */}
-        <span className="inline-flex" style={{ color: 'var(--ink)' }}>
-          <LogoMark size={62} />
-        </span>
-
-        {/* الاسم */}
+        {/* أَثَر و ATHAR جنباً إلى جنب */}
         <h1
-          className="display mt-6 text-6xl font-bold leading-none sm:text-7xl"
+          className="display flex items-baseline justify-center gap-3.5 text-4xl font-bold leading-none sm:text-5xl"
           style={{ color: 'var(--ink)' }}
         >
-          أَثَر
+          <span>أَثَر</span>
+          <span
+            className="text-[11px] font-medium sm:text-xs"
+            style={{ color: 'var(--text-faint)', letterSpacing: '0.34em' }}
+          >
+            ATHAR
+          </span>
         </h1>
 
         {/* الخط الأخضر الفاصل */}
@@ -60,34 +57,36 @@ export function Home() {
           aria-hidden
         />
 
-        {/* العبارة */}
+        {/* الذاكرة البصرية للمملكة */}
         <p className="display mt-6 text-xl font-medium sm:text-2xl" style={{ color: 'var(--text-muted)' }}>
           الذاكرة البصرية للمملكة
         </p>
 
+        {/* العبارة الجامعة */}
         <p
-          className="mt-3 text-xs font-medium"
-          style={{ color: 'var(--text-faint)', letterSpacing: '0.32em' }}
+          className="display mx-auto mt-8 max-w-2xl text-xl leading-[1.7] sm:text-2xl"
+          style={{ color: 'var(--ink)', fontWeight: 400 }}
         >
-          ATHAR
+          كل صورةٍ قديمة…{' '}
+          <span style={{ color: 'var(--accent)', fontWeight: 700 }}>أَثَرٌ لا يُمحى.</span>
         </p>
 
-        {/* الوصف — يبقى لأنه يحمل معنى المشروع */}
+        {/* الوصف */}
         <p
-          className="mx-auto mt-8 max-w-xl text-sm leading-relaxed sm:text-base"
+          className="mx-auto mt-6 max-w-xl text-sm leading-loose sm:text-base"
           style={{ color: 'var(--text-muted)' }}
         >
-          أسواقٌ تغيّرت، وشوارعُ لم تعد كما كانت، ومنازلُ لم يبقَ منها إلا الصور.
-          <br />
-          ارفع ما لديك، ودع أَثَر يساعدك على توثيقه وحفظه للأجيال القادمة.
+          مساحة تحفظ صور الأماكن وذكرياتها، وتجمع حكايات المدن والأحياء والديار كما بقيت في ذاكرة
+          من عاشها.
         </p>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link to="/add" className="btn btn-primary px-7">
-            أضف صورة
+        {/* الفعل */}
+        <div className="mt-9 flex flex-wrap justify-center gap-3">
+          <Link to="/explore" className="btn btn-primary px-7">
+            استكشف الذاكرة
           </Link>
-          <Link to="/explore" className="btn btn-outline px-7">
-            استكشف الأرشيف
+          <Link to="/add" className="btn btn-outline px-7">
+            أضف أثرك
           </Link>
         </div>
 

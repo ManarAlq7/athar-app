@@ -18,8 +18,35 @@ export interface Photo {
   after_year: number | null
   /** هل استُخدم الذكاء الاصطناعي في التوثيق؟ يُعرض كشارة شفافية */
   ai_assisted: boolean
+
+  // ————— بيانات الحقوق —————
+  /** الجهة أو الأرشيف: Wikimedia Commons، أرشيف عائلي، تصوير المساهم… */
+  source: string | null
+  /** اسم المصوّر أو صاحب الحق */
+  creator: string | null
+  /** اسم الرخصة: PD-Saudi Arabia، CC BY 2.0، ملك الرافع… */
+  license: string | null
+  /** رابط نص الرخصة */
+  license_url: string | null
+  /** رابط صفحة الصورة في مصدرها */
+  source_url: string | null
+  /** هل تُلزم الرخصة بعرض النسبة؟ */
+  attribution_required: boolean
+  /** إقرار الرافع بامتلاكه الحقوق أو الإذن */
+  rights_confirmed: boolean
+
   created_at: string
 }
+
+/** الرخص المتاحة في نموذج الإضافة */
+export const LICENSES = [
+  { value: 'ملك الرافع', label: 'صورتي — أملك حقوقها', attribution: false },
+  { value: 'إذن من المالك', label: 'لدي إذن كتابي من صاحب الحقوق', attribution: false },
+  { value: 'PD-Saudi Arabia', label: 'ملك عام في المملكة (نُشرت قبل ٢٠٠١)', attribution: false },
+  { value: 'Public Domain', label: 'ملك عام / CC0', attribution: false },
+  { value: 'CC BY', label: 'مشاع إبداعي — نسب المصنّف (CC BY)', attribution: true },
+  { value: 'CC BY-SA', label: 'مشاع إبداعي — نسب وترخيص بالمثل (CC BY-SA)', attribution: true },
+] as const
 
 /** حقول الإدخال عند إنشاء سجل جديد */
 export type PhotoInput = Omit<Photo, 'id' | 'user_id' | 'created_at'>

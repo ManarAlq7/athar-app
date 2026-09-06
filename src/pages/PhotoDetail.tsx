@@ -6,6 +6,7 @@ import { Spinner } from '../components/Spinner'
 import { Alert } from '../components/Alert'
 import { MemoryWall } from '../components/MemoryWall'
 import { BeforeAfter } from '../components/BeforeAfter'
+import { Attribution } from '../components/Attribution'
 import { STORAGE_BUCKET } from '../lib/constants'
 import type { Photo } from '../lib/types'
 
@@ -225,6 +226,8 @@ export function PhotoDetail() {
                 <dd className="mt-0.5 font-semibold">{formatDate(photo.created_at)}</dd>
               </div>
             </dl>
+
+            <Attribution photo={photo} />
 
             {isOwner && (
               <div className="mt-5 border-t pt-4" style={{ borderColor: 'var(--border)' }}>
