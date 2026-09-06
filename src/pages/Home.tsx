@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { supabase, isSupabaseConfigured } from '../lib/supabase'
 import { Alert } from '../components/Alert'
 import { HeroBackdrop } from '../components/HeroBackdrop'
+import { LogoMark } from '../components/Logo'
 
 interface Stats {
   photo_count: number
@@ -11,8 +12,11 @@ interface Stats {
 }
 
 /**
- * الصفحة الرئيسية = الواجهة وحدها، بملء الشاشة، فوق مشهد نجدي مرسوم.
- * «كيف يعمل أَثَر» و«أحدث ما أُضيف» لكلٍّ منهما صفحته المستقلة.
+ * الصفحة الرئيسية — الهوية البصرية الأصلية لأَثَر، مطابقة لـ public/og.png:
+ * شعار في الوسط، ثم الاسم، ثم خط أخضر، ثم «الذاكرة البصرية للمملكة»، ثم ATHAR،
+ * وأفق نجدي هادئ في الأسفل.
+ *
+ * كل الوظائف الحالية باقية: الزرّان والإحصاءات وتنبيه الإعداد.
  */
 export function Home() {
   const [stats, setStats] = useState<Stats | null>(null)
@@ -33,29 +37,44 @@ export function Home() {
 
   return (
     <section className="relative flex min-h-[calc(100dvh-74px)] items-center overflow-hidden">
-      {/* نقشة هندسية خفيفة خلف كل شيء */}
-      <div className="pattern-najdi absolute inset-0" aria-hidden />
-      <div
-        className="absolute inset-0"
-        aria-hidden
-        style={{
-          background:
-            'linear-gradient(180deg, color-mix(in srgb, var(--surface) 62%, transparent) 0%, var(--surface) 72%)',
-        }}
-      />
-
-      {/* المشهد النجدي المرسوم — نخيل وبيوت طين وعائلة */}
       <HeroBackdrop />
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 py-20 text-center">
-        <h1 className="display mx-auto max-w-3xl text-4xl font-bold leading-[1.25] sm:text-6xl">
-          كل صورة قديمة
-          <br />
-          <span style={{ color: 'var(--accent)' }}>أَثَرٌ لا يُمحى</span>
+      <div className="relative z-10 mx-auto w-full max-w-3xl px-4 py-16 text-center">
+        {/* الشعار — قوس نجدي داخل مربّع */}
+        <span className="inline-flex" style={{ color: 'var(--ink)' }}>
+          <LogoMark size={62} />
+        </span>
+
+        {/* الاسم */}
+        <h1
+          className="display mt-6 text-6xl font-bold leading-none sm:text-7xl"
+          style={{ color: 'var(--ink)' }}
+        >
+          أَثَر
         </h1>
 
+        {/* الخط الأخضر الفاصل */}
+        <span
+          className="mx-auto mt-5 block h-[3px] w-20 rounded-full"
+          style={{ backgroundColor: 'var(--accent)' }}
+          aria-hidden
+        />
+
+        {/* العبارة */}
+        <p className="display mt-6 text-xl font-medium sm:text-2xl" style={{ color: 'var(--text-muted)' }}>
+          الذاكرة البصرية للمملكة
+        </p>
+
         <p
-          className="mx-auto mt-6 max-w-2xl text-base leading-relaxed sm:text-lg"
+          className="mt-3 text-xs font-medium"
+          style={{ color: 'var(--text-faint)', letterSpacing: '0.32em' }}
+        >
+          ATHAR
+        </p>
+
+        {/* الوصف — يبقى لأنه يحمل معنى المشروع */}
+        <p
+          className="mx-auto mt-8 max-w-xl text-sm leading-relaxed sm:text-base"
           style={{ color: 'var(--text-muted)' }}
         >
           أسواقٌ تغيّرت، وشوارعُ لم تعد كما كانت، ومنازلُ لم يبقَ منها إلا الصور.
@@ -63,10 +82,7 @@ export function Home() {
           ارفع ما لديك، ودع أَثَر يساعدك على توثيقه وحفظه للأجيال القادمة.
         </p>
 
-        {/* الشارة تسبق الزرّين مباشرةً */}
-        <span className="chip mx-auto mt-10">منصة سعودية لحفظ الذاكرة البصرية</span>
-
-        <div className="mt-4 flex flex-wrap justify-center gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link to="/add" className="btn btn-primary px-7">
             أضف صورة
           </Link>
@@ -76,14 +92,14 @@ export function Home() {
         </div>
 
         {stats && stats.photo_count > 0 && (
-          <dl className="mx-auto mt-14 grid max-w-lg grid-cols-3 gap-4">
+          <dl className="mx-auto mt-12 grid max-w-md grid-cols-3 gap-4">
             {[
               { label: 'صورة موثّقة', value: stats.photo_count },
               { label: 'منطقة', value: stats.region_count },
               { label: 'مساهم', value: stats.contributor_count },
             ].map((s) => (
               <div key={s.label}>
-                <dd className="display text-3xl font-bold" style={{ color: 'var(--ink)' }}>
+                <dd className="display text-2xl font-bold" style={{ color: 'var(--ink)' }}>
                   <span className="num">{s.value}</span>
                 </dd>
                 <dt className="mt-1 text-xs" style={{ color: 'var(--text-muted)' }}>
